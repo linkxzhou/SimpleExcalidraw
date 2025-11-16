@@ -1,5 +1,4 @@
-![中文文档](./docs/README.md)
-![English Document](./docs/README.en.md)
+![中文文档](./docs/README.md) ![English Document](./docs/README.en.md)
 
 ## Features
 

@@ -1,5 +1,4 @@
-![中文文档](./docs/README.md)
-![English Document](./docs/README.en.md)
+![中文文档](./docs/README.md) ![English Document](./docs/README.en.md)
 
 ## 功能
 
@@ -10,7 +9,7 @@
 - [ ] 增加边框样式
 - [ ] 增加字体选择
 - [ ] 优化手机端体验
-- [ ] 增加AI生成功能
+- [ ] 增加 AI 生成功能
 
 ## 使用地址
 
@@ -97,5 +96,6 @@ docker-compose up --build -d
 ```
 
 ## 项目来源
+
 （1）https://github.com/korbinzhao/excalidraw-cn  
 （2）https://github.com/excalidraw/excalidraw
