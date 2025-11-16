@@ -1,94 +1,88 @@
+![中文文档](./docs/README.md)
+![English Document](./docs/README.en.md)
+
 ## 功能
 
 - [x] 中文手写体
 - [x] 多画布功能
 - [x] 多模板增加字段适配脚本
 - [x] 增加选择颜色种类
-- [ ] 私有化保存
-- [ ] 自定义 workspace
-- [ ] 自定义描边宽度
 - [ ] 增加边框样式
 - [ ] 增加字体选择
-- [ ] 优化手机端体验（具体功能待补充）
+- [ ] 优化手机端体验
+- [ ] 增加AI生成功能
 
 ## 使用地址
 
 https://excalidraw-phi-woad.vercel.app/
 
-## 项目来源
+## 本地安装
 
-（1）https://github.com/korbinzhao/excalidraw-cn  
-（2）https://github.com/excalidraw/excalidraw
+以下步骤将帮助你在本地环境中运行该项目以进行开发和测试。
 
----
-
-## Local Installation
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-
-### Requirements
+### 环境要求
 
 - [Node.js](https://nodejs.org/en/)
-- [Yarn](https://yarnpkg.com/getting-started/install) (v1 or v2.4.2+)
+- [Yarn](https://yarnpkg.com/getting-started/install)（v1 或 v2.4.2+）
 - [Git](https://git-scm.com/downloads)
 
-### Clone the repo
+### 克隆仓库
 
 ```bash
 git clone https://github.com/linkxzhou/excalidraw-plus.git
 ```
 
-### Install the dependencies
+### 安装依赖
 
 ```bash
 yarn
 ```
 
-### Start the server
+### 启动服务
 
 ```bash
 yarn start
 ```
 
-Now you can open [http://localhost:3000](http://localhost:3000) and start coding in your favorite code editor.
+现在可以打开 [http://localhost:3000](http://localhost:3000) 并开始在你喜欢的编辑器中编码。
 
-### Collaboration
+### 协作
 
-For collaboration, you will need to set up [collab server](https://github.com/excalidraw/excalidraw-room) in local.
+如果需要协作，请在本地配置协作服务器（collab server）：https://github.com/excalidraw/excalidraw-room
 
-### Commands
+### 常用命令
 
-#### Install the dependencies
+#### 安装依赖
 
 ```
 yarn
 ```
 
-#### Run the project
+#### 运行项目
 
 ```
 yarn start
 ```
 
-#### Reformat all files with Prettier
+#### 使用 Prettier 统一格式
 
 ```
 yarn fix
 ```
 
-#### Run tests
+#### 运行测试
 
 ```
 yarn test
 ```
 
-#### Update test snapshots
+#### 更新测试快照
 
 ```
 yarn test:update
 ```
 
-#### Test for formatting with Prettier
+#### 检查代码格式（Prettier）
 
 ```
 yarn test:code
@@ -96,8 +90,12 @@ yarn test:code
 
 ### Docker Compose
 
-You can use docker-compose to work on Excalidraw locally if you don't want to setup a Node.js env.
+如果不想在本地搭建 Node.js 环境，可以使用 docker-compose 在本地开发 Excalidraw。
 
 ```sh
 docker-compose up --build -d
 ```
+
+## 项目来源
+（1）https://github.com/korbinzhao/excalidraw-cn  
+（2）https://github.com/excalidraw/excalidraw
