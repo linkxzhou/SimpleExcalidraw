@@ -17,6 +17,14 @@
 
 ![](./dev-docs/images/ScreenShot1.png) ![](./dev-docs/images/ScreenShot2.png)
 
+## Environment Variables
+
+```
+REACT_AI_API= // Your AI API endpoint, e.g., https://api.openai.com/v1/chat/completions
+REACT_AI_SECRET= // Your AI API secret key, e.g., sk-1234567890abcdef1234567890abcdef
+REACT_AI_MODEL= // Your AI model name, e.g., gpt-3.5-turbo
+```
+
 ## Live Demo
 
 https://excalidraw-phi-woad.vercel.app/
@@ -34,7 +42,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Clone the repo
 
 ```bash
-git clone https://github.com/linkxzhou/excalidraw-plus.git
+git clone https://github.com/linkxzhou/SimpleExcalidraw.git
 ```
 
 ### Install dependencies
