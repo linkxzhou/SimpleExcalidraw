@@ -158,16 +158,20 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
         null,
       );
       try {
+        console.log("AI更新场景", elements, loadedAppState);
         (window as any)?.h?.app?.updateScene({
           elements,
           appState: loadedAppState,
           commitToHistory: true,
         });
-      } catch {}
+      } catch (e) {
+        console.error("AI更新场景失败", e);
+        message.error("AI更新场景失败，请检查配置");
+      }
       setAppState(loadedAppState);
       setOpen(false);
-    } catch (e) {
-      console.error("AI请求失败", e);
+    } catch (err) {
+      console.error("AI请求失败", err);
       message.error("AI请求失败，请检查配置");
     } finally {
       setLoading(false);

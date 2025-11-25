@@ -11,6 +11,7 @@
 - [ ] Font selection
 - [x] Mobile experience optimization (details TBD)
 - [x] AI-generated content
+- [ ] Fix PDF parsing issue
 
 ## Screenshots
 
