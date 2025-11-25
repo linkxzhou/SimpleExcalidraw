@@ -17,9 +17,8 @@ const allLanguages: Language[] = [
   { code: "ja-JP", label: "日本語" },
   { code: "zh-CN", label: "简体中文" },
   { code: "zh-TW", label: "繁體中文" },
+  { code: "zh-HK", label: "香港繁體中文" },
 ].concat([defaultLang]);
-
-console.log("allLanguages", allLanguages);
 
 export const languages: Language[] = allLanguages
   .sort((left, right) => (left.label > right.label ? 1 : -1))

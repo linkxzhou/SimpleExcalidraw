@@ -223,7 +223,15 @@
     "lock": "Mantener la herramienta seleccionada activa después de dibujar",
     "penMode": "Modo Lápiz - previene toque",
     "link": "Añadir/Actualizar enlace para una forma seleccionada",
-    "eraser": "Borrar"
+    "eraser": "Borrar",
+    "hand": "Mano (herramienta de panorámica)",
+    "aiAssistant": "IA laguntzailea",
+    "aiAPI": "IA-ren APIa",
+    "aiAPIKey": "IA-ren API gakoa",
+    "aiModel": "IA eredua",
+    "aiPrompt": "IA gonbita",
+    "aiSubmit": "Sortu IA-rekin",
+    "aiPromptPlaceholder": "Implementar la funcionalidad: xxx\nMódulo: xxx\nSubmódulo: xxx\nDescripción detallada: xxx"
   },
   "headings": {
     "canvasActions": "Acciones del lienzo",

@@ -177,6 +177,29 @@ export const LockedIcon = createIcon(
   modifiedTablerIconProps,
 );
 
+export const AIIcon = createIcon(
+  <g strokeWidth="1.5">
+    <defs>
+      <linearGradient id="aiSciFi" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="#00ffff" />
+        <stop offset="50%" stopColor="#7f00ff" />
+        <stop offset="100%" stopColor="#ff00ff" />
+      </linearGradient>
+    </defs>
+    <text
+      x="11"
+      y="20"
+      textAnchor="middle"
+      fontSize="22"
+      fill="url(#aiSciFi)"
+      style={{ fontStyle: "italic", fontWeight: 600 }}
+    >
+      Ai
+    </text>
+  </g>,
+  tablerIconProps,
+);
+
 // custom
 export const WelcomeScreenMenuArrow = createIcon(
   <>

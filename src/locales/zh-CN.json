@@ -223,7 +223,14 @@
     "lock": "绘制后保持所选的工具栏状态",
     "penMode": "笔模式 – 避免误触",
     "link": "为选中的形状添加/更新链接",
-    "eraser": "橡皮"
+    "eraser": "橡皮",
+    "aiAssistant": "AI 助手",
+    "aiAPI": "AI API",
+    "aiAPIKey": "AI 密钥",
+    "aiModel": "AI 模型",
+    "aiPrompt": "生成提示词",
+    "aiSubmit": "AI生成",
+    "aiPromptPlaceholder": "实现功能：xxx\n模块：xxx\n子模块：xxx\n详细描述：xxx"
   },
   "headings": {
     "canvasActions": "画布动作",

@@ -20,6 +20,7 @@ import { HintViewer } from "./HintViewer";
 import { Island } from "./Island";
 import { LoadingMessage } from "./LoadingMessage";
 import { LockButton } from "./LockButton";
+import { AIButton } from "./AiButton";
 import { MobileMenu } from "./MobileMenu";
 import { PasteChartDialog } from "./PasteChartDialog";
 import { Section } from "./Section";
@@ -318,6 +319,7 @@ const LayerUI = ({
                             title={t("toolBar.penMode")}
                             penDetected={appState.penDetected}
                           />
+
                           <LockButton
                             checked={appState.activeTool.locked}
                             onChange={onLockToggle}
@@ -344,6 +346,10 @@ const LayerUI = ({
                               });
                             }}
                           />
+
+                          <div className="App-toolbar__divider"></div>
+
+                          <AIButton title={t("toolBar.aiAssistant")} />
                         </Stack.Row>
                       </Island>
                     </Stack.Row>

@@ -223,7 +223,15 @@
     "lock": "描画後も使用中のツールを選択したままにする",
     "penMode": "ペンモード - タッチ防止",
     "link": "選択した図形のリンクを追加/更新",
-    "eraser": "消しゴム"
+    "eraser": "消しゴム",
+    "hand": "ハンド (パンツール)",
+    "aiAssistant": "AI アシスタント",
+    "aiAPI": "AI API",
+    "aiAPIKey": "AI キー",
+    "aiModel": "AI モデル",
+    "aiPrompt": "生成プロンプト",
+    "aiSubmit": "AI生成",
+    "aiPromptPlaceholder": "実装する機能：xxx\nモジュール：xxx\nサブモジュール：xxx\n詳細な説明：xxx"
   },
   "headings": {
     "canvasActions": "キャンバス操作",

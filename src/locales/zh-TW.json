@@ -223,7 +223,14 @@
     "lock": "可連續使用選取的工具",
     "penMode": "筆模式 - 避免觸摸",
     "link": "為所選的形狀增加\b/更新連結",
-    "eraser": "橡皮擦"
+    "eraser": "橡皮擦",
+    "aiAssistant": "AI 助手",
+    "aiAPI": "AI API",
+    "aiAPIKey": "AI 密鑰",
+    "aiModel": "AI 模型",
+    "aiPrompt": "生成提示詞",
+    "aiSubmit": "AI生成",
+    "aiPromptPlaceholder": "實現功能：xxx\n模組：xxx\n子模組：xxx\n詳細描述：xxx"
   },
   "headings": {
     "canvasActions": "canvas 動作",

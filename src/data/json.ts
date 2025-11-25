@@ -106,6 +106,15 @@ export const loadFromJSON = async (
   );
 };
 
+export const loadFromJSONString = async (
+  json: string,
+  localAppState: AppState | null,
+  localElements: readonly ExcalidrawElement[] | null,
+) => {
+  const blob = new Blob([json], { type: MIME_TYPES.excalidraw });
+  return loadFromBlob(blob, localAppState, localElements, null);
+};
+
 export const isValidExcalidrawData = (data?: {
   type?: any;
   elements?: any;

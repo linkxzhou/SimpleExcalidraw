@@ -223,7 +223,14 @@
     "lock": "{defaultValue}",
     "penMode": "{defaultValue}",
     "link": "{defaultValue}",
-    "eraser": "{defaultValue}"
+    "eraser": "{defaultValue}",
+    "aiAssistant": "{defaultValue}",
+    "aiAPI": "{defaultValue}",
+    "aiAPIKey": "{defaultValue}",
+    "aiModel": "{defaultValue}",
+    "aiPrompt": "{defaultValue}",
+    "aiSubmit": "{defaultValue}",
+    "aiPromptPlaceholder": "{defaultValue}"
   },
   "headings": {
     "canvasActions": "畫布動作",

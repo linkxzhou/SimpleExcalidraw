@@ -20,6 +20,7 @@ import { actionToggleStats } from "../actions";
 import { HandButton } from "./HandButton";
 import { isHandToolActive } from "../appState";
 import { useTunnels } from "./context/tunnels";
+import { AIButton } from "./AiButton";
 
 type MobileMenuProps = {
   appState: AppState;
@@ -111,6 +112,7 @@ export const MobileMenu = ({
                     title={t("toolBar.hand")}
                     isMobile
                   />
+                  <AIButton title={t("toolBar.aiAssistant")} />
                 </div>
               </Stack.Row>
             </Stack.Col>

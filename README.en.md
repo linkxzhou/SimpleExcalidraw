@@ -1,5 +1,5 @@
-![中文文档](./README.md)   
-![English Document](./README.en.md)  
+![中文文档](./README.md)  
+![English Document](./README.en.md)
 
 ## Features
 
@@ -9,8 +9,12 @@
 - [x] More color choices
 - [ ] Additional border styles
 - [ ] Font selection
-- [ ] Mobile experience optimization (details TBD)
-- [ ] AI-generated content
+- [x] Mobile experience optimization (details TBD)
+- [x] AI-generated content
+
+## Screenshots
+
+![](./dev-docs/images/ScreenShot1.png) ![](./dev-docs/images/ScreenShot2.png)
 
 ## Live Demo
 

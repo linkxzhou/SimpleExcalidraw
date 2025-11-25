@@ -223,7 +223,15 @@
     "lock": "Mantendu aktibo hautatutako tresna marraztu ondoren",
     "penMode": "Luma modua - ukipena saihestu",
     "link": "Gehitu / Eguneratu esteka hautatutako forma baterako",
-    "eraser": "Borragoma"
+    "eraser": "Borragoma",
+    "hand": "Mano (herramienta de panorámica)",
+    "aiAssistant": "IA laguntzailea",
+    "aiAPI": "IA APIa",
+    "aiAPIKey": "IA API gakoa",
+    "aiModel": "IA eredua",
+    "aiPrompt": "IA gonbita",
+    "aiSubmit": "Sortu IA bidez",
+    "aiPromptPlaceholder": "Implementatu funtzionalitatea: xxx\nModulua: xxx\nSubmodulua: xxx\nDetallatu deskribapen: xxx"
   },
   "headings": {
     "canvasActions": "Canvas ekintzak",

@@ -224,7 +224,13 @@
     "penMode": "Pen mode - prevent touch",
     "link": "Add/ Update link for a selected shape",
     "eraser": "Eraser",
-    "hand": "Hand (panning tool)"
+    "hand": "Hand (panning tool)",
+    "aiAssistant": "AI Assistant",
+    "aiAPI": "AI API",
+    "aiAPIKey": "AI API Key",
+    "aiModel": "AI Model",
+    "aiPrompt": "AI Prompt",
+    "aiSubmit": "AI Generate"
   },
   "headings": {
     "canvasActions": "Canvas actions",

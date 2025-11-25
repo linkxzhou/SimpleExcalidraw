@@ -147,11 +147,6 @@ export const LibraryMenuHeader: React.FC<{
       await library.updateLibrary({
         libraryItems: fileOpen({
           description: "Excalidraw library files",
-          // ToDo: Be over-permissive until https://bugs.webkit.org/show_bug.cgi?id=34442
-          // gets resolved. Else, iOS users cannot open `.excalidraw` files.
-          /*
-            extensions: [".json", ".excalidrawlib"],
-            */
         }),
         merge: true,
         openLibraryMenu: true,

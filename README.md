@@ -1,5 +1,5 @@
-![中文文档](./README.md)    
-![English Document](./README.en.md)  
+![中文文档](./README.md)  
+![English Document](./README.en.md)
 
 ## 功能
 
@@ -9,8 +9,12 @@
 - [x] 增加选择颜色种类
 - [ ] 增加边框样式
 - [ ] 增加字体选择
-- [ ] 优化手机端体验
-- [ ] 增加 AI 生成功能
+- [x] 优化手机端体验
+- [x] 增加 AI 生成功能
+
+## 截图
+
+![](./dev-docs/images/ScreenShot1.png) ![](./dev-docs/images/ScreenShot2.png)
 
 ## 使用地址
 
@@ -41,7 +45,7 @@ yarn
 ### 启动服务
 
 ```bash
-yarn start
+yarn dev
 ```
 
 现在可以打开 [http://localhost:3000](http://localhost:3000) 并开始在你喜欢的编辑器中编码。
