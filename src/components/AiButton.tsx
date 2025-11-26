@@ -8,7 +8,11 @@ import {
   loadAISettings,
   saveAISettings,
 } from "./AiButtonAction";
-import { useExcalidrawAppState, useExcalidrawSetAppState } from "./App";
+import {
+  useExcalidrawAppState,
+  useExcalidrawSetAppState,
+  useExcalidrawActionManager,
+} from "./App";
 import { loadFromJSONString } from "../data/json";
 import { t } from "../i18n";
 import type { ModalProps, ConfigProviderProps } from "antd";
@@ -40,6 +44,7 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
   const [size] = useState<SizeType>("middle");
   const appState = useExcalidrawAppState();
   const setAppState = useExcalidrawSetAppState();
+  const actionManager = useExcalidrawActionManager();
 
   const { TextArea } = Input;
   const sharedContent = (
@@ -158,11 +163,11 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
         null,
       );
       try {
-        console.log("AI更新场景", elements, loadedAppState);
-        (window as any)?.h?.app?.updateScene({
+        actionManager.updater({
           elements,
           appState: loadedAppState,
           commitToHistory: true,
+          syncHistory: true,
         });
       } catch (e) {
         console.error("AI更新场景失败", e);
