@@ -16,6 +16,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"],
+  "include": ["src", "scripts/gif.worker.js"],
   "exclude": ["src/packages/excalidraw/types"]
 }

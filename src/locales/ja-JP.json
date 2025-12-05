@@ -568,6 +568,20 @@
     "D8D8EB": "{defaultValue}",
     "DAB1D5": "{defaultValue}"
   },
+  "other": {
+    "animateDuration": "期間",
+    "animateLoop": "ループ",
+    "animateReplay": "リプレイ",
+    "animatePlay": "アニメーション再生",
+    "aiUploadHint": "ファイルをアップロード (.md, .txt, .csv, .pdf 対応)",
+    "aiUpdateSceneFailed": "AIによるシーン更新に失敗しました。設定を確認してください",
+    "aiRequestFailed": "AIリクエストに失敗しました。設定を確認してください",
+    "aiParseSuccess": "解析成功、プロンプトに入力されました",
+    "aiPdfParseSuccess": "PDF解析完了、プロンプトに入力されました",
+    "aiPdfParseFailed": "PDF解析に失敗しました。.md/.txt/.csv を試してください",
+    "aiFileSupportError": ".md/.txt/.csv/.pdf のみサポートされています",
+    "aiParseError": "ファイル解析に失敗しました"
+  },
   "welcomeScreen": {
     "app": {
       "center_heading": "すべてのデータはブラウザにローカル保存されます。",

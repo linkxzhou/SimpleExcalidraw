@@ -230,7 +230,8 @@
     "aiAPIKey": "AI API Key",
     "aiModel": "AI Model",
     "aiPrompt": "AI Prompt",
-    "aiSubmit": "AI Generate"
+    "aiSubmit": "AI Generate",
+    "aiPromptPlaceholder": "Implement functionality: xxx\nModule: xxx\nSubmodule: xxx\nDetailed description: xxx"
   },
   "headings": {
     "canvasActions": "Canvas actions",
@@ -567,6 +568,20 @@
     "B3D9D9": "{defaultValue}",
     "D8D8EB": "{defaultValue}",
     "DAB1D5": "{defaultValue}"
+  },
+  "other": {
+    "animateDuration": "Duration",
+    "animateLoop": "Loop",
+    "animateReplay": "Replay",
+    "animatePlay": "Play Animation",
+    "aiUploadHint": "Upload file, supports .md,.txt,.csv,.pdf",
+    "aiUpdateSceneFailed": "AI failed to update scene, please check configuration",
+    "aiRequestFailed": "AI request failed, please check configuration",
+    "aiParseSuccess": "Parsing successful, prompt updated",
+    "aiPdfParseSuccess": "PDF parsing completed, prompt updated",
+    "aiPdfParseFailed": "PDF parsing failed, please try uploading .md/.txt/.csv",
+    "aiFileSupportError": "Only supports .md/.txt/.csv/.pdf",
+    "aiParseError": "File parsing failed"
   },
   "welcomeScreen": {
     "app": {

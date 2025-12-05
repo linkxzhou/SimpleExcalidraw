@@ -567,6 +567,20 @@
     "D8D8EB": "{defaultValue}",
     "DAB1D5": "{defaultValue}"
   },
+  "other": {
+    "animateDuration": "時長",
+    "animateLoop": "循環",
+    "animateReplay": "重播",
+    "animatePlay": "播放動畫",
+    "aiUploadHint": "上傳文件，支持解析.md,.txt,.csv,.pdf",
+    "aiUpdateSceneFailed": "AI更新場景失敗，請檢查配置",
+    "aiRequestFailed": "AI請求失敗，請檢查配置",
+    "aiParseSuccess": "解析成功，已填充到提示詞",
+    "aiPdfParseSuccess": "PDF解析完成，已填充到提示詞",
+    "aiPdfParseFailed": "PDF解析失敗，請嘗試上傳.md/.txt/.csv",
+    "aiFileSupportError": "僅支持 .md/.txt/.csv/.pdf",
+    "aiParseError": "文件解析失敗"
+  },
   "welcomeScreen": {
     "app": {
       "center_heading": "{defaultValue}",

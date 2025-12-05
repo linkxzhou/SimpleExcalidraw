@@ -16,7 +16,7 @@ import {
 import { loadFromJSONString } from "../data/json";
 import { t } from "../i18n";
 import type { ModalProps, ConfigProviderProps } from "antd";
-import { pdfjs } from "react-pdf";
+import pdfToText from "react-pdftotext";
 
 type AIButtonProps = {
   title?: string;
@@ -171,13 +171,13 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
         });
       } catch (e) {
         console.error("AI更新场景失败", e);
-        message.error("AI更新场景失败，请检查配置");
+        message.error(t("other.aiUpdateSceneFailed"));
       }
       setAppState(loadedAppState);
       setOpen(false);
     } catch (err) {
       console.error("AI请求失败", err);
-      message.error("AI请求失败，请检查配置");
+      message.error(t("other.aiRequestFailed"));
     } finally {
       setLoading(false);
     }
@@ -189,38 +189,23 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
       if (ext === "md" || ext === "txt" || ext === "csv") {
         const text = await file.text();
         setTextAreaValue(text);
-        message.success("解析成功，已填充到提示词");
+        message.success(t("other.aiParseSuccess"));
       } else if (ext === "pdf") {
-        const buf = new Uint8Array(await file.arrayBuffer());
-        const text = await extractPdfText(buf);
+        const text = await pdfToText(file);
         if (text.trim()) {
           setTextAreaValue(text);
-          message.success("PDF解析完成，已填充到提示词");
+          message.success(t("other.aiPdfParseSuccess"));
         } else {
-          message.error("PDF解析失败，请尝试上传.md/.txt/.csv");
+          message.error(t("other.aiPdfParseFailed"));
         }
       } else {
-        message.error("仅支持 .md/.txt/.csv/.pdf");
+        message.error(t("other.aiFileSupportError"));
       }
     } catch (e) {
-      message.error("文件解析失败");
+      message.error(t("other.aiParseError"));
       console.error(e);
     }
     return false;
-  };
-
-  const extractPdfText = async (data: Uint8Array) => {
-    pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist/build/pdf.worker.min.js`;
-    const loadingTask = pdfjs.getDocument({ data });
-    const pdf = await loadingTask.promise;
-    const out: string[] = [];
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i);
-      const content = await page.getTextContent();
-      const pageText = content.items.map((it: any) => it.str || "").join(" ");
-      out.push(pageText);
-    }
-    return out.join("\n");
   };
 
   const footer = (
@@ -232,7 +217,7 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
         maxCount={1}
       >
         <Button size="small" style={{ marginRight: 8 }}>
-          上传文件，支持解析.md,.txt,.csv,.pdf
+          {t("other.aiUploadHint")}
         </Button>
       </Upload>
       <Button

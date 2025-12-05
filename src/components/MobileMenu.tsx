@@ -21,6 +21,7 @@ import { HandButton } from "./HandButton";
 import { isHandToolActive } from "../appState";
 import { useTunnels } from "./context/tunnels";
 import { AIButton } from "./AiButton";
+import { AnimateButton } from "./AnimateButton";
 
 type MobileMenuProps = {
   appState: AppState;
@@ -113,6 +114,7 @@ export const MobileMenu = ({
                     isMobile
                   />
                   <AIButton title={t("toolBar.aiAssistant")} />
+                  <AnimateButton />
                 </div>
               </Stack.Row>
             </Stack.Col>

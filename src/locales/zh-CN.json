@@ -567,6 +567,20 @@
     "D8D8EB": "{defaultValue}",
     "DAB1D5": "{defaultValue}"
   },
+  "other": {
+    "animateDuration": "时长",
+    "animateLoop": "循环",
+    "animateReplay": "重播",
+    "animatePlay": "播放动画",
+    "aiUploadHint": "上传文件，支持解析.md,.txt,.csv,.pdf",
+    "aiUpdateSceneFailed": "AI更新场景失败，请检查配置",
+    "aiRequestFailed": "AI请求失败，请检查配置",
+    "aiParseSuccess": "解析成功，已填充到提示词",
+    "aiPdfParseSuccess": "PDF解析完成，已填充到提示词",
+    "aiPdfParseFailed": "PDF解析失败，请尝试上传.md/.txt/.csv",
+    "aiFileSupportError": "仅支持 .md/.txt/.csv/.pdf",
+    "aiParseError": "文件解析失败"
+  },
   "welcomeScreen": {
     "app": {
       "center_heading": "您的所有数据都储存在浏览器本地。",

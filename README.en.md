@@ -109,6 +109,40 @@ You can use docker-compose to work on Excalidraw locally if you don't want to se
 docker-compose up --build -d
 ```
 
+## Animation Implementation
+
+This project implements a whiteboard animation feature based on SVG and Web Animations API (WAAPI), allowing users to replay the drawing process.
+
+### Core Architecture
+
+The animation module is mainly located in the `src/animate` directory and consists of the following core parts:
+
+1.  **`AnimateApp.tsx`**: The entry component for the animation feature, displayed as a Modal. It is responsible for managing global state (such as duration, loop toggle, pause state) and coordinating the `Viewer` and `AnimateConfig` components.
+2.  **`Viewer.tsx`**: Responsible for rendering SVG content and executing animations.
+    - It first calls `exportToSvg` to convert the current whiteboard content into an SVG DOM.
+    - Then it calls `animateSvg` to apply animation effects to the SVG elements.
+3.  **`AnimateConfig.tsx`**: Provides the user control interface, including duration selection, loop toggle, and replay button.
+4.  **`animate.ts`**: Contains the core animation logic.
+
+### Animation Principle (`animate.ts`)
+
+The animation generation process is fully automated and does not require users to manually set keyframes. The main steps are as follows:
+
+1.  **Preprocessing and Metrics**:
+    - Traverse SVG child elements and hide all elements.
+    - Calculate the "metric" for each element: For `<path>` elements, calculate the total path length (`getTotalLength()`); for other elements like text or images, assign a fixed metric value.
+2.  **Time Allocation**:
+    - Allocate the total animation duration to each element based on the proportion of its metric to the total metric, ensuring that longer paths have longer drawing times for a more natural visual effect.
+3.  **Animation Generation (WAAPI)**:
+    - **Path Animation**: Use `stroke-dasharray` and `stroke-dashoffset` techniques to simulate handwriting effects. Also handles fills, fading in the fill color after the outline is drawn.
+    - **Non-Path Animation (Text/Images)**: Use simple opacity fade-in effects.
+    - **Timing Control**: Control the playback order of elements via the `delay` property and set slight overlap times to make the animation smoother.
+4.  **Control and Looping**:
+    - Returns a controller object (`controller`) supporting `play`, `pause`, `cancel`, and `seek` operations.
+    - Loop playback is implemented by triggering `animateSvg` again via `setTimeout` after the animation ends.
+
+The advantage of this approach is the ability to accurately capture complex WAAPI-driven SVG animations, not limited to simple CSS transformations. Install dependencies
+
 ## Project Sources
 
 (1) https://github.com/korbinzhao/excalidraw-cn  

@@ -21,6 +21,7 @@ import { Island } from "./Island";
 import { LoadingMessage } from "./LoadingMessage";
 import { LockButton } from "./LockButton";
 import { AIButton } from "./AiButton";
+import { AnimateButton } from "./AnimateButton";
 import { MobileMenu } from "./MobileMenu";
 import { PasteChartDialog } from "./PasteChartDialog";
 import { Section } from "./Section";
@@ -350,6 +351,7 @@ const LayerUI = ({
                           <div className="App-toolbar__divider"></div>
 
                           <AIButton title={t("toolBar.aiAssistant")} />
+                          <AnimateButton />
                         </Stack.Row>
                       </Island>
                     </Stack.Row>

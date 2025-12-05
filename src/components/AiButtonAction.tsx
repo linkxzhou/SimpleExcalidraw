@@ -200,7 +200,7 @@ export async function requestCompletions({
 }
 
 export function buildPrompt(prompt: string, settings: AISettings = {}) {
-  const language = getLanguage();
+  const language = getLanguage()?.label;
   return `## Role (角色设定)   
 你是一个精通的 \`excalidraw\` 专家，善于拆解输入的 ”Task (任务)“，生成 \`excalidraw\` 架构图的JSON数据。
 
@@ -208,15 +208,12 @@ export function buildPrompt(prompt: string, settings: AISettings = {}) {
 <examples>
 \`\`\`json
 {
-  "type": "excalidraw",                    // 文档类型标识
+  "type": "excalidraw",                   // 文档类型标识
   "version": 2,                           // Excalidraw版本号
   "source": "amd-zen-architecture",       // 来源标识
   "elements": [                           // 绘图元素数组
     {
       "type": "text",                     // 元素类型：text/rectangle/ellipse/arrow/line等
-      "version": 2,                       // 元素版本号
-      "versionNonce": 900001,             // 版本随机数，用于同步
-      "isDeleted": false,                 // 是否已删除
       "id": "title-text",                 // 元素唯一标识符
       "fillStyle": "solid",               // 填充样式：solid/hachure/cross-hatch
       "strokeWidth": 2,                   // 边框宽度
@@ -230,16 +227,12 @@ export function buildPrompt(prompt: string, settings: AISettings = {}) {
       "backgroundColor": "transparent",   // 背景颜色
       "width": 280,                       // 宽度
       "height": 40,                       // 高度
-      "seed": 11001,                      // 随机种子，用于一致性渲染
       "groupIds": [],                     // 所属组ID数组
       "roundness": null,                  // 圆角设置，null或{type: 1-3}
       "boundElements": [],                // 绑定的元素数组
-      "updated": 1763279817652,           // 最后更新时间戳
-      "link": null,                       // 链接地址
-      "locked": false,                    // 是否锁定
       "fontSize": 28,                     // 字体大小
       "fontFamily": 1,                    // 字体族：1-4
-      "text": "AMD Zen CPU 架构总览",       // 文本内容
+      "text": "AMD Zen CPU 架构总览",      // 文本内容
       "baseline": 30,                     // 基线位置
       "textAlign": "center",              // 水平对齐：left/center/right
       "verticalAlign": "top",             // 垂直对齐：top/middle/bottom
@@ -257,6 +250,9 @@ export function buildPrompt(prompt: string, settings: AISettings = {}) {
 <rules>
 - 只需要输出JSON，不需要注释等其他内容
 - 按照 ”Task (任务)“ 拆解各个模块，输出的模块，子模块等的内容要详细
+- X坐标和Y坐标要根据实际情况调整，不能超出绘图区域，同时考虑模块和模块的关系
+- width和height要根据内容调整，不能超出绘图区域，同时考虑模块和模块的关系
+- containerId需要考虑模块和子模块的关系，确保子模块在正确的容器内
 - 输出语言：${language}
 </rules>
 
