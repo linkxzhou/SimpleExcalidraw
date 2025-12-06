@@ -13,15 +13,17 @@ const AI_SETTINGS_STORAGE_KEY = "simpleexcalidraw_ai_settings";
 
 export function loadAISettings(): AISettings {
   const envDefaults: AISettings = {
-    api: (process.env.REACT_AI_API || "").trim() || undefined,
-    secret: (process.env.REACT_AI_SECRET || "").trim() || undefined,
-    model: (process.env.REACT_AI_MODEL || "").trim() || undefined,
+    api: (process.env.REACT_APP_AI_API || "").trim() || undefined,
+    secret: (process.env.REACT_APP_AI_SECRET || "").trim() || undefined,
+    model: (process.env.REACT_APP_AI_MODEL || "").trim() || undefined,
   };
+
   try {
     const raw = localStorage.getItem(AI_SETTINGS_STORAGE_KEY);
     const saved = raw ? JSON.parse(raw) : {};
     return { ...envDefaults, ...saved };
-  } catch {
+  } catch (e) {
+    console.error("loadAISettings error: ", e);
     return envDefaults;
   }
 }
@@ -29,7 +31,9 @@ export function loadAISettings(): AISettings {
 export function saveAISettings(settings: AISettings) {
   try {
     localStorage.setItem(AI_SETTINGS_STORAGE_KEY, JSON.stringify(settings));
-  } catch {}
+  } catch (e) {
+    console.error("saveAISettings error: ", e);
+  }
 }
 
 type RequestCompletionsParams = {

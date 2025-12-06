@@ -16,14 +16,15 @@
 
 ## 截图
 
-![](./dev-docs/images/ScreenShot1.png) ![](./dev-docs/images/ScreenShot2.png)
+![](./dev-docs/images/ScreenShot1.png)   
+![](./dev-docs/images/ScreenShot2.png)
 
 ## 环境变量
 
 ```
-REACT_AI_API= // 你的 AI 接口地址，样例：https://api.openai.com/v1/chat/completions
-REACT_AI_SECRET= // 你的 AI 接口密钥，样例：sk-1234567890abcdef1234567890abcdef
-REACT_AI_MODEL= // 你的 AI 模型名称，样例：gpt-3.5-turbo
+REACT_APP_AI_API= // 你的 AI 接口地址，样例：https://api.openai.com/v1/chat/completions
+REACT_APP_AI_SECRET= // 你的 AI 接口密钥，样例：sk-1234567890abcdef1234567890abcdef
+REACT_APP_AI_MODEL= // 你的 AI 模型名称，样例：gpt-3.5-turbo
 ```
 
 ## 使用地址
