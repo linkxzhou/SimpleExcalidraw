@@ -225,7 +225,7 @@
     "link": "Add/ Update link for a selected shape",
     "eraser": "Eraser",
     "hand": "Hand (panning tool)",
-    "aiAssistant": "AI Assistant",
+    "aiAssistant": "AI Assistant (model limit, generation time takes 3-5 minutes)",
     "aiAPI": "AI API",
     "aiAPIKey": "AI API Key",
     "aiModel": "AI Model",

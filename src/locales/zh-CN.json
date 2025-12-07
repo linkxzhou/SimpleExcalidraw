@@ -224,7 +224,7 @@
     "penMode": "笔模式 – 避免误触",
     "link": "为选中的形状添加/更新链接",
     "eraser": "橡皮",
-    "aiAssistant": "AI 助手",
+    "aiAssistant": "AI 助手（模型限制，生成时间需要3-5分钟）",
     "aiAPI": "AI API",
     "aiAPIKey": "AI 密钥",
     "aiModel": "AI 模型",

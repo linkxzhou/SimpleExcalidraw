@@ -225,7 +225,7 @@
     "link": "Añadir/Actualizar enlace para una forma seleccionada",
     "eraser": "Borrar",
     "hand": "Mano (herramienta de panorámica)",
-    "aiAssistant": "IA laguntzailea",
+    "aiAssistant": "IA laguntzailea (modelo limitado, tiempo de generación entre 3-5 minutos)",
     "aiAPI": "IA-ren APIa",
     "aiAPIKey": "IA-ren API gakoa",
     "aiModel": "IA eredua",

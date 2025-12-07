@@ -16,7 +16,7 @@
 
 ## 截图
 
-![](./dev-docs/images/ScreenShot1.png)   
+![](./dev-docs/images/ScreenShot1.png)  
 ![](./dev-docs/images/ScreenShot2.png)
 
 ## 环境变量

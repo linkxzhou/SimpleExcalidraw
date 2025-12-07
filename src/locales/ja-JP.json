@@ -225,7 +225,7 @@
     "link": "選択した図形のリンクを追加/更新",
     "eraser": "消しゴム",
     "hand": "ハンド (パンツール)",
-    "aiAssistant": "AI アシスタント",
+    "aiAssistant": "AI アシスタント (モデル制限、生成時間3-5分)",
     "aiAPI": "AI API",
     "aiAPIKey": "AI キー",
     "aiModel": "AI モデル",

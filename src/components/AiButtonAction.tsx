@@ -205,62 +205,62 @@ export async function requestCompletions({
 
 export function buildPrompt(prompt: string, settings: AISettings = {}) {
   const language = getLanguage()?.label;
-  return `## Role (角色设定)   
-你是一个精通的 \`excalidraw\` 专家，善于拆解输入的 ”Task (任务)“，生成 \`excalidraw\` 架构图的JSON数据。
+  return `## Role
+You are an expert in \`excalidraw\`, skilled at breaking down input "Tasks" and generating JSON data for \`excalidraw\` architecture diagrams.
 
-## Output Examples (输出样例)
+## Output Examples
 <examples>
 \`\`\`json
 {
-  "type": "excalidraw",                   // 文档类型标识
-  "version": 2,                           // Excalidraw版本号
-  "source": "amd-zen-architecture",       // 来源标识
-  "elements": [                           // 绘图元素数组
+  "type": "excalidraw",                   // Document type identifier
+  "version": 2,                           // Excalidraw version number
+  "source": "amd-zen-architecture",       // Source identifier
+  "elements": [                           // Array of drawing elements
     {
-      "type": "text",                     // 元素类型：text/rectangle/ellipse/arrow/line等
-      "id": "title-text",                 // 元素唯一标识符
-      "fillStyle": "solid",               // 填充样式：solid/hachure/cross-hatch
-      "strokeWidth": 2,                   // 边框宽度
-      "strokeStyle": "solid",             // 边框样式：solid/dashed/dotted
-      "roughness": 1,                     // 手绘粗糙度：0-2
-      "opacity": 100,                     // 透明度：0-100
-      "angle": 0,                         // 旋转角度（弧度）
-      "x": 420,                           // X坐标
-      "y": 40,                            // Y坐标
-      "strokeColor": "#1e1e1e",         // 边框颜色
-      "backgroundColor": "transparent",   // 背景颜色
-      "width": 280,                       // 宽度
-      "height": 40,                       // 高度
-      "groupIds": [],                     // 所属组ID数组
-      "roundness": null,                  // 圆角设置，null或{type: 1-3}
-      "boundElements": [],                // 绑定的元素数组
-      "fontSize": 28,                     // 字体大小
-      "fontFamily": 1,                    // 字体族：1-4
-      "text": "AMD Zen CPU 架构总览",      // 文本内容
-      "baseline": 30,                     // 基线位置
-      "textAlign": "center",              // 水平对齐：left/center/right
-      "verticalAlign": "top",             // 垂直对齐：top/middle/bottom
-      "containerId": null,                // 容器ID
-      "originalText": "AMD Zen CPU 架构总览" // 原始文本
+      "type": "text",                     // Element type: text/rectangle/ellipse/arrow/line, etc.
+      "id": "title-text",                 // Unique element identifier
+      "fillStyle": "solid",               // Fill style: solid/hachure/cross-hatch
+      "strokeWidth": 2,                   // Stroke width
+      "strokeStyle": "solid",             // Stroke style: solid/dashed/dotted
+      "roughness": 1,                     // Hand-drawn roughness: 0-2
+      "opacity": 100,                     // Opacity: 0-100
+      "angle": 0,                         // Rotation angle (radians)
+      "x": 420,                           // X coordinate
+      "y": 40,                            // Y coordinate
+      "strokeColor": "#1e1e1e",         // Stroke color
+      "backgroundColor": "transparent",   // Background color
+      "width": 280,                       // Width
+      "height": 40,                       // Height
+      "groupIds": [],                     // Array of group IDs
+      "roundness": null,                  // Corner roundness, null or {type: 1-3}
+      "boundElements": [],                // Array of bound elements
+      "fontSize": 28,                     // Font size
+      "fontFamily": 1,                    // Font family: 1-4
+      "text": "AMD Zen CPU Architecture Overview",      // Text content
+      "baseline": 30,                     // Baseline position
+      "textAlign": "center",              // Horizontal alignment: left/center/right
+      "verticalAlign": "top",             // Vertical alignment: top/middle/bottom
+      "containerId": null,                // Container ID
+      "originalText": "AMD Zen CPU Architecture Overview" // Original text
     },
-    // ... 其他元素 
+    // ... other elements 
   ]
 }
 \`\`\`
 </examples>
  
-## Rules (具体规则)
-请严格遵守以下规则：
+## Rules
+Please strictly adhere to the following rules:
 <rules>
-- 只需要输出JSON，不需要注释等其他内容
-- 按照 ”Task (任务)“ 拆解各个模块，输出的模块，子模块等的内容要详细
-- X坐标和Y坐标要根据实际情况调整，不能超出绘图区域，同时考虑模块和模块的关系
-- width和height要根据内容调整，不能超出绘图区域，同时考虑模块和模块的关系
-- containerId需要考虑模块和子模块的关系，确保子模块在正确的容器内
-- 输出语言：${language}
+- Output only JSON, no comments or other content.
+- Break down the "Task" into modules, sub-modules, etc., ensuring detailed content.
+- Adjust X and Y coordinates according to the actual situation, ensuring they do not exceed the drawing area, and consider the relationships between modules.
+- Adjust width and height according to the content, ensuring they do not exceed the drawing area, and consider the relationships between modules.
+- Consider the relationship between modules and sub-modules for containerId, ensuring sub-modules are within the correct container.
+- Output language: ${language}
 </rules>
 
-## Task (任务)
+## Task
 <context>
 ${prompt}
 </context>

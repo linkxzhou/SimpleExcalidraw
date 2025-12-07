@@ -225,7 +225,7 @@
     "link": "Gehitu / Eguneratu esteka hautatutako forma baterako",
     "eraser": "Borragoma",
     "hand": "Mano (herramienta de panorámica)",
-    "aiAssistant": "IA laguntzailea",
+    "aiAssistant": "IA laguntzailea (modelo limitado, tiempo de generación entre 3-5 minutos)",
     "aiAPI": "IA APIa",
     "aiAPIKey": "IA API gakoa",
     "aiModel": "IA eredua",
