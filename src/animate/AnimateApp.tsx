@@ -15,7 +15,7 @@ interface AnimateAppProps {
 export const AnimateApp: React.FC<AnimateAppProps> = ({ open, onCancel }) => {
   const elements = useExcalidrawElements();
   const appState = useExcalidrawAppState();
-  const [duration, setDuration] = useState(5000);
+  const [duration, setDuration] = useState(10000);
   const [loop, setLoop] = useState(false);
   const [version, setVersion] = useState(0);
   const [paused, setPaused] = useState(false);

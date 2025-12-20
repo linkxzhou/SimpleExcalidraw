@@ -39,7 +39,7 @@ type SizeType = ConfigProviderProps["componentSize"];
 export const AIButton: React.FC<AIButtonProps> = (props) => {
   const [open, setOpen] = useState(false);
   const defaults = loadAISettings();
-  const [textAreaValue, setTextAreaValue] = useState("");
+  const [textAreaValue, setTextAreaValue] = useState(defaults.prompt || "");
   const [api, setApi] = useState(defaults.api || "");
   const [secret, setSecret] = useState(defaults.secret || "");
   const [model, setModel] = useState(defaults.model || "");
@@ -154,7 +154,7 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      saveAISettings({ api, secret, model });
+      saveAISettings({ api, secret, model, prompt: textAreaValue });
 
       if (!textAreaValue || textAreaValue.trim() === "") {
         console.error("Prompt, model, and endpoint are required");
@@ -199,6 +199,7 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
       }
       setAppState(nextAppState);
       setOpen(false);
+      window.location.reload();
     } catch (err) {
       console.error("AI请求失败", err);
       message.error(t("other.aiRequestFailed"));
