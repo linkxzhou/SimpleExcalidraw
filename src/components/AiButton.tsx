@@ -5,6 +5,9 @@ import { AIIcon } from "./icons";
 import { Button, Modal, Input, Upload, message } from "antd";
 import {
   requestCompletions,
+  requestTextCompletions,
+  buildExtendPrompt,
+  buildExcalidrawPrompt,
   loadAISettings,
   saveAISettings,
 } from "./AiButtonAction";
@@ -13,10 +16,12 @@ import {
   useExcalidrawSetAppState,
   useExcalidrawActionManager,
 } from "./App";
+import { actionZoomToFit } from "../actions";
 import { loadFromJSONString } from "../data/json";
 import { t } from "../i18n";
 import type { ModalProps, ConfigProviderProps } from "antd";
 import pdfToText from "react-pdftotext";
+import { parseMermaidToExcalidraw } from "../mermaid-to-excalidrawjson";
 
 type AIButtonProps = {
   title?: string;
@@ -39,6 +44,7 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
   const [secret, setSecret] = useState(defaults.secret || "");
   const [model, setModel] = useState(defaults.model || "");
   const [loading, setLoading] = useState(false);
+  const [extending, setExtending] = useState(false);
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setTextAreaValue(e.target.value);
   const [size] = useState<SizeType>("middle");
@@ -122,7 +128,7 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
           maxLength={9000}
           onChange={onChange}
           placeholder={t("toolBar.aiPromptPlaceholder")}
-          style={{ height: 180, borderColor: "#e3e2fe", paddingTop: 8 }}
+          style={{ height: 240, borderColor: "#e3e2fe", paddingTop: 8 }}
         />
       </label>
     </>
@@ -149,23 +155,41 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
     setLoading(true);
     try {
       saveAISettings({ api, secret, model });
+
+      if (!textAreaValue || textAreaValue.trim() === "") {
+        console.error("Prompt, model, and endpoint are required");
+        message.error(t("other.aiInvalidParams"));
+      }
+
+      const requestPrompt = buildExcalidrawPrompt(textAreaValue);
       const { ideas } = await requestCompletions({
         api,
         secret,
         model,
         temperature: 0.6,
-        prompt: textAreaValue,
+        prompt: requestPrompt,
       });
-      const jsonStr = typeof ideas === "string" ? ideas : JSON.stringify(ideas);
+      const mermaidStr =
+        typeof ideas === "string" ? ideas : JSON.stringify(ideas);
+      console.log("mermaidStr: ", mermaidStr);
+      const excalidrawJson = await parseMermaidToExcalidraw(mermaidStr);
+      const excalidrawJsonStr = JSON.stringify(excalidrawJson);
+      console.log("excalidrawJson: ", excalidrawJson);
       const { elements, appState: loadedAppState } = await loadFromJSONString(
-        jsonStr,
+        excalidrawJsonStr,
         appState,
         null,
       );
+
+      const appStateForFit = { ...appState, ...loadedAppState };
+      const nextAppState = elements.length
+        ? actionZoomToFit.perform(elements, appStateForFit).appState
+        : loadedAppState;
+
       try {
         actionManager.updater({
           elements,
-          appState: loadedAppState,
+          appState: nextAppState,
           commitToHistory: true,
           syncHistory: true,
         });
@@ -173,13 +197,37 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
         console.error("AI更新场景失败", e);
         message.error(t("other.aiUpdateSceneFailed"));
       }
-      setAppState(loadedAppState);
+      setAppState(nextAppState);
       setOpen(false);
     } catch (err) {
       console.error("AI请求失败", err);
       message.error(t("other.aiRequestFailed"));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleExtendPrompt = async () => {
+    setExtending(true);
+    try {
+      saveAISettings({ api, secret, model });
+      const expandedPrompt = buildExtendPrompt(textAreaValue);
+      const { content } = await requestTextCompletions({
+        api,
+        secret,
+        model,
+        temperature: 0.3,
+        prompt: expandedPrompt,
+      });
+      if (content.trim()) {
+        setTextAreaValue(content);
+        message.success(t("other.aiParseSuccess"));
+      }
+    } catch (err) {
+      console.error("AI扩写失败", err);
+      message.error(t("other.aiRequestFailed"));
+    } finally {
+      setExtending(false);
     }
   };
 
@@ -210,16 +258,32 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
 
   const footer = (
     <>
-      <Upload
-        showUploadList={false}
-        beforeUpload={handleParsePromptUpload}
-        accept=".md,.txt,.csv,.pdf"
-        maxCount={1}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
-        <Button size="small" style={{ marginRight: 8 }}>
-          {t("other.aiUploadHint")}
+        <Upload
+          showUploadList={false}
+          beforeUpload={handleParsePromptUpload}
+          accept=".md,.txt,.csv,.pdf"
+          maxCount={1}
+        >
+          <Button size="small" style={{ marginRight: 8 }}>
+            {t("other.aiUploadHint")}
+          </Button>
+        </Upload>
+        <Button
+          size="small"
+          loading={extending}
+          disabled={!textAreaValue.trim() || loading}
+          onClick={handleExtendPrompt}
+        >
+          {t("toolBar.aiExpand")}
         </Button>
-      </Upload>
+      </div>
       <Button
         type="primary"
         size={size}
@@ -255,6 +319,7 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
       <Modal
         centered
         title={t("toolBar.aiAssistant")}
+        width={800}
         styles={styles}
         footer={footer}
         open={open}

@@ -132,10 +132,7 @@ function extractIdeas(data: any): any {
         null;
 
       if (typeof content === "string") {
-        const parsed = safeParseJson(content);
-        if (parsed !== null) {
-          return parsed;
-        }
+        return content;
       }
 
       return data;
@@ -164,20 +161,14 @@ export async function requestCompletions({
   if (authSecret) {
     headers.Authorization = `Bearer ${authSecret}`;
   }
-  const requestPrompt = buildPrompt(prompt);
 
-  if (
-    !requestPrompt ||
-    requestPrompt.trim() === "" ||
-    !model ||
-    endpoint.trim() === ""
-  ) {
+  if (!prompt || prompt.trim() === "" || !model || endpoint.trim() === "") {
     throw new Error("Prompt, model, and endpoint are required");
   }
 
   const body = {
     model,
-    messages: [{ role: "user", content: requestPrompt }],
+    messages: [{ role: "user", content: prompt }],
     temperature,
     max_tokens: 32000,
     enable_thinking: false,
@@ -203,62 +194,127 @@ export async function requestCompletions({
   }
 }
 
-export function buildPrompt(prompt: string, settings: AISettings = {}) {
-  const language = getLanguage()?.label;
-  return `## Role
-You are an expert in \`excalidraw\`, skilled at breaking down input "Tasks" and generating JSON data for \`excalidraw\` architecture diagrams.
-
-## Output Examples
-<examples>
-\`\`\`json
-{
-  "type": "excalidraw",                   // Document type identifier
-  "version": 2,                           // Excalidraw version number
-  "source": "amd-zen-architecture",       // Source identifier
-  "elements": [                           // Array of drawing elements
-    {
-      "type": "text",                     // Element type: text/rectangle/ellipse/arrow/line, etc.
-      "id": "title-text",                 // Unique element identifier
-      "fillStyle": "solid",               // Fill style: solid/hachure/cross-hatch
-      "strokeWidth": 2,                   // Stroke width
-      "strokeStyle": "solid",             // Stroke style: solid/dashed/dotted
-      "roughness": 1,                     // Hand-drawn roughness: 0-2
-      "opacity": 100,                     // Opacity: 0-100
-      "angle": 0,                         // Rotation angle (radians)
-      "x": 420,                           // X coordinate
-      "y": 40,                            // Y coordinate
-      "strokeColor": "#1e1e1e",         // Stroke color
-      "backgroundColor": "transparent",   // Background color
-      "width": 280,                       // Width
-      "height": 40,                       // Height
-      "groupIds": [],                     // Array of group IDs
-      "roundness": null,                  // Corner roundness, null or {type: 1-3}
-      "boundElements": [],                // Array of bound elements
-      "fontSize": 28,                     // Font size
-      "fontFamily": 1,                    // Font family: 1-4
-      "text": "AMD Zen CPU Architecture Overview",      // Text content
-      "baseline": 30,                     // Baseline position
-      "textAlign": "center",              // Horizontal alignment: left/center/right
-      "verticalAlign": "top",             // Vertical alignment: top/middle/bottom
-      "containerId": null,                // Container ID
-      "originalText": "AMD Zen CPU Architecture Overview" // Original text
-    },
-    // ... other elements 
-  ]
+function extractContent(data: any): string | null {
+  if (typeof data === "string") {
+    return data;
+  }
+  if (data && typeof data === "object") {
+    const content =
+      data?.choices?.[0]?.message?.content ??
+      data?.choices?.[0]?.delta?.content ??
+      data?.message?.content ??
+      null;
+    return typeof content === "string" ? content : null;
+  }
+  return null;
 }
-\`\`\`
-</examples>
- 
-## Rules
-Please strictly adhere to the following rules:
-<rules>
-- Output only JSON, no comments or other content.
-- Break down the "Task" into modules, sub-modules, etc., ensuring detailed content.
-- Adjust X and Y coordinates according to the actual situation, ensuring they do not exceed the drawing area, and consider the relationships between modules.
-- Adjust width and height according to the content, ensuring they do not exceed the drawing area, and consider the relationships between modules.
-- Consider the relationship between modules and sub-modules for containerId, ensuring sub-modules are within the correct container.
-- Output language: ${language}
-</rules>
+
+export async function requestTextCompletions(params: RequestCompletionsParams) {
+  const { data, isJson, endpoint } = await requestCompletions(params);
+  const content = extractContent(data);
+  if (!content) {
+    throw new Error("Failed to extract AI response content");
+  }
+  return { data, content, isJson, endpoint };
+}
+
+export function buildExtendPrompt(prompt: string, settings: AISettings = {}) {
+  const language = settings.language || getLanguage()?.label;
+  const raw = (prompt || "").trim();
+
+  return `You will be given a user's raw input. First, expand it into a clear, structured architecture specification that can be converted into a Mermaid diagram.
+
+## Output (for the next step)
+Produce a concise but complete spec with these sections (use the same headings):
+- Title
+- Scope
+- Actors (if any)
+- Main Modules (3-10)
+- Submodules (for each module)
+- Data/Control Flows (arrows): SOURCE -> TARGET : label
+- Notes / Constraints (important layout or grouping hints)
+- OutputLanguage: ${language}
+
+## Naming Rules
+- Use stable, Mermaid-safe IDs for modules/submodules: only letters/numbers/underscore (e.g. Auth, User_Service, DB).
+- When you introduce a module/submodule, include both: ID (Mermaid-safe) and Label (human-readable, ${language}).
+- Every flow MUST use the IDs that exist in your spec.
+
+## General Rules
+- Infer missing details when the user input is vague.
+- Prefer fewer, clearer modules over many tiny ones.
+- Keep flow labels short (1-6 words).
+
+## UserInput
+${raw}`;
+}
+
+export function buildExcalidrawPrompt(
+  prompt: string,
+  settings: AISettings = {},
+) {
+  const language = settings.language || getLanguage()?.label;
+  return `## Role
+You are an expert in Mermaid diagramming. Convert the input Task into ONE Mermaid diagram that best matches the content.
+
+## Output (STRICT)
+- Output ONLY Mermaid code text.
+- Do NOT wrap it in markdown code fences.
+- Choose exactly ONE diagram type.
+- Start with exactly ONE of:
+  - flowchart LR
+  - sequenceDiagram
+  - classDiagram
+- Do NOT mix multiple diagram types in one output.
+
+## Diagram Selection Rules
+- Use flowchart LR for architecture/modules/components and their connections.
+- Use sequenceDiagram for time-ordered interactions/messages between actors/services.
+- Use classDiagram for domain/data model (entities/classes) and relationships.
+
+## Mermaid Conventions (by type)
+- Common:
+  - Use Mermaid-safe IDs when applicable (letters/numbers/underscore only).
+  - Use human-readable labels in ${language}.
+  - Avoid features that often break parsing/rendering: HTML labels, \`click\`, emojis.
+
+- flowchart LR:
+  - Prefer subgraphs for Main Modules, and nodes inside for Submodules.
+    - Example node: Auth["Auth Service"]
+    - Example subgraph:
+      subgraph AuthModule["Auth"]
+        Auth
+        TokenStore["Token Store"]
+      end
+  - Use directed edges with short labels:
+    - Auth -->|"issue token"| TokenStore
+  - Add node background colors using Mermaid styling (prefer \`classDef\` + \`class\`).
+    - Assign a consistent, light fill color per Main Module; apply the same color to its Submodules.
+    - Example:
+      - classDef auth fill:#E3F2FD,stroke:#1E88E5,color:#0D47A1;
+      - class Auth,TokenStore auth;
+
+- sequenceDiagram:
+  - Use \`actor\`/\`participant\` with clear names (human-readable labels in ${language}).
+  - Use concise messages with arrows (e.g. A->>B: label).
+  - Do NOT add background colors/styles unless you are 100% sure the syntax is valid for sequenceDiagram.
+
+- classDiagram:
+  - Use class names as Mermaid-safe IDs; keep members minimal (only if needed).
+  - Use simple relationship arrows with short labels.
+  - If you add colors, use Mermaid styling (\`classDef\` + \`class\`) and keep it minimal.
+  - IMPORTANT: When using \`class\` to assign a style, you MUST put exactly ONE class per line.
+    - Correct:
+      - class NginxCore core
+      - class EventModule module
+      - class Connection data
+    - Incorrect (do not do this):
+      - class EventModule,HTTPModule,UpstreamModule,ConfigModule module
+      - class Connection,Event,Request,Response,MemoryPool data
+
+## Layout / Readability Rules
+- Keep it 3-10 main modules total when using flowchart LR.
+- Keep labels short (1-6 words) and avoid markdown formatting.
 
 ## Task
 <context>

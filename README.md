@@ -149,4 +149,4 @@ docker-compose up --build -d
 
 （1）https://github.com/korbinzhao/excalidraw-cn  
 （2）https://github.com/excalidraw/excalidraw  
-（3）https://github.com/dai-shi/excalidraw-animate/tree/main?tab=readme-ov-file
+（3）https://github.com/dai-shi/excalidraw-animate/tree/main?tab=readme-ov-file （4）https://github.com/sindrel/excalidraw-converter
