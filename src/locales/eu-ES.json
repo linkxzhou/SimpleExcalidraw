@@ -232,6 +232,8 @@
     "aiModel": "IA eredua",
     "aiPrompt": "IA gonbita",
     "aiSubmit": "Sortu IA bidez",
+    "aiSimpleFlow": "Fluxu sinplea",
+    "aiComplexFlow": "Fluxu konplexua",
     "aiPromptPlaceholder": "Implementatu funtzionalitatea: xxx\nModulua: xxx\nSubmodulua: xxx\nDetallatu deskribapen: xxx"
   },
   "headings": {

@@ -232,6 +232,8 @@
     "aiModel": "AI Model",
     "aiPrompt": "AI Prompt",
     "aiSubmit": "AI Generate",
+    "aiSimpleFlow": "Simple Flow",
+    "aiComplexFlow": "Complex Flow",
     "aiPromptPlaceholder": "Implement functionality: xxx\nModule: xxx\nSubmodule: xxx\nDetailed description: xxx"
   },
   "headings": {

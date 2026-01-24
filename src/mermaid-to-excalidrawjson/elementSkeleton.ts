@@ -204,8 +204,6 @@ export const createTextSkeletonFromSVG = (
   opts?: { groupId?: string; id?: string },
 ) => {
   const node = {} as Text;
-  const x = Number(textNode.getAttribute("x"));
-  const y = Number(textNode.getAttribute("y"));
   node.type = "text";
   node.text = entityCodesToText(text);
   if (opts?.id) {
@@ -217,8 +215,8 @@ export const createTextSkeletonFromSVG = (
   const boundingBox = textNode.getBBox();
   node.width = boundingBox.width;
   node.height = boundingBox.height;
-  node.x = x - boundingBox.width / 2;
-  node.y = y;
+  node.x = boundingBox.x;
+  node.y = boundingBox.y;
   const fontSize = parseInt(getComputedStyle(textNode).fontSize);
   node.fontSize = fontSize;
   return node;

@@ -72,9 +72,14 @@ export const transformToExcalidrawTextSkeleton = (element: Text) => {
   const normalizedText = normalizeText(element.text) || "";
   const fontSize = element.fontSize || 20;
   const textWidth =
-    element.width || calculateTextWidth(normalizedText, fontSize);
+    element.width && element.width > 0
+      ? element.width
+      : calculateTextWidth(normalizedText, fontSize);
   const textHeight =
-    element.height || calculateTextHeight(normalizedText, fontSize);
+    element.height && element.height > 0
+      ? element.height
+      : calculateTextHeight(normalizedText, fontSize);
+  const containerId = (element as any).containerId;
 
   return addBaseProps({
     id: element.id || nanoid(),
@@ -84,7 +89,7 @@ export const transformToExcalidrawTextSkeleton = (element: Text) => {
     width: textWidth,
     height: textHeight,
     text: normalizedText,
-    fontSize: 20,
+    fontSize,
     fontFamily: 1,
     textAlign: "center",
     verticalAlign: "middle",
@@ -96,10 +101,10 @@ export const transformToExcalidrawTextSkeleton = (element: Text) => {
     strokeWidth: 1,
     strokeStyle: "solid",
     roughness: 1,
-    baseline: 18,
+    baseline: Math.round(fontSize * 0.9),
     opacity: 100,
     groupIds: element.groupId ? [element.groupId] : [],
-    containerId: element.groupId || "",
+    ...(containerId ? { containerId } : {}),
   });
 };
 

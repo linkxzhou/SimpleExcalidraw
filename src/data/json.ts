@@ -110,9 +110,16 @@ export const loadFromJSONString = async (
   json: string,
   localAppState: AppState | null,
   localElements: readonly ExcalidrawElement[] | null,
+  refreshDimensions = false,
 ) => {
   const blob = new Blob([json], { type: MIME_TYPES.excalidraw });
-  return loadFromBlob(blob, localAppState, localElements, null);
+  return loadFromBlob(
+    blob,
+    localAppState,
+    localElements,
+    null,
+    refreshDimensions,
+  );
 };
 
 export const isValidExcalidrawData = (data?: {

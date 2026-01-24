@@ -26,6 +26,31 @@ const addBaseProps = (element: any) => ({
   locked: element.locked ?? false,
 });
 
+const normalizeLabelText = (text: string) => {
+  return text.replace(/\\n/g, "\n").replace(/<br\s*\/?>/gi, "\n");
+};
+
+const calculateTextMetrics = (text: string, fontSize: number) => {
+  const lines = text.split("\n");
+  const lineHeight = fontSize * 1.25;
+  let maxWidth = fontSize;
+  for (const line of lines) {
+    let width = 0;
+    for (const char of line) {
+      if (/[\u4e00-\u9fa5]/.test(char)) {
+        width += fontSize;
+      } else {
+        width += fontSize * 0.6;
+      }
+    }
+    maxWidth = Math.max(maxWidth, width || fontSize);
+  }
+  return {
+    width: Math.max(maxWidth, fontSize),
+    height: Math.max(lines.length * lineHeight, fontSize),
+  };
+};
+
 const computeGroupIds = (
   graph: Flowchart,
 ): {
@@ -121,7 +146,6 @@ export const FlowchartToExcalidrawSkeletonConverter = new GraphConverter({
         strokeWidth: 2,
         strokeStyle: "solid",
         roughness: 1,
-        roundness: null,
         groupIds,
         boundElements: [],
       });
@@ -137,17 +161,27 @@ export const FlowchartToExcalidrawSkeletonConverter = new GraphConverter({
         });
         elements.push(container);
 
+        const normalizedText = normalizeLabelText(labelText);
+        const { width: textWidth, height: textHeight } = calculateTextMetrics(
+          normalizedText,
+          fontSize,
+        );
+        const textX = subGraph.x + (subGraph.width - textWidth) / 2;
+        const textY = subGraph.y + 10;
+
         addTextData(
           {
             id: textId,
-            text: labelText,
+            text: normalizedText,
             fontSize,
-            x: subGraph.x,
-            y: subGraph.y,
-            width: subGraph.width,
-            height: subGraph.height,
+            x: textX,
+            y: textY,
+            width: textWidth,
+            height: textHeight,
             verticalAlign: "top",
+            textAlign: "center",
             containerId: id,
+            baseline: Math.round(fontSize * 0.9),
           },
           elements,
         );
@@ -187,8 +221,8 @@ export const FlowchartToExcalidrawSkeletonConverter = new GraphConverter({
           type: 3,
         },
         link: vertex.link || null,
-        ...containerStyle,
         boundElements: [],
+        ...containerStyle,
       };
 
       switch (vertex.type) {
@@ -240,17 +274,28 @@ export const FlowchartToExcalidrawSkeletonConverter = new GraphConverter({
         });
         elements.push(containerElement);
 
+        const normalizedText = normalizeLabelText(labelText);
+        const { width: textWidth, height: textHeight } = calculateTextMetrics(
+          normalizedText,
+          fontSize,
+        );
+        const textX =
+          containerElement.x + (containerElement.width - textWidth) / 2;
+        const textY =
+          containerElement.y + (containerElement.height - textHeight) / 2 + 5;
+
         addTextData(
           {
             id: textId,
-            text: labelText,
+            text: normalizedText,
             fontSize,
-            x: vertex.x,
-            y: vertex.y,
-            width: vertex.width,
-            height: vertex.height,
+            x: textX,
+            y: textY,
+            width: textWidth,
+            height: textHeight,
             verticalAlign: "middle",
             containerId: id,
+            baseline: Math.round(fontSize * 0.9),
           },
           elements,
         );
@@ -316,17 +361,31 @@ export const FlowchartToExcalidrawSkeletonConverter = new GraphConverter({
         });
         elements.push(arrow);
 
+        const normalizedText = normalizeLabelText(labelText);
+        const { width: textWidth, height: textHeight } = calculateTextMetrics(
+          normalizedText,
+          fontSize,
+        );
+        const midIndex = Math.floor(reflectionPoints.length / 2);
+        const midPoint = reflectionPoints[midIndex] || {
+          x: startX + arrowWidth / 2,
+          y: startY + arrowHeight / 2,
+        };
+        const textX = midPoint.x - textWidth / 2;
+        const textY = midPoint.y - textHeight / 2;
+
         addTextData(
           {
             id: textId,
-            text: labelText,
+            text: normalizedText,
             fontSize,
-            x: arrow.x,
-            y: arrow.y,
-            width: arrow.width,
-            height: arrow.height,
+            x: textX,
+            y: textY,
+            width: textWidth,
+            height: textHeight,
             verticalAlign: "middle",
             containerId: arrowId,
+            baseline: Math.round(fontSize * 0.9),
           },
           elements,
         );
@@ -374,7 +433,6 @@ const addTextData = (elementText: any, elementList: any) => {
     groupIds: [],
     roundness: null,
     isDeleted: false,
-    boundElements: null,
     locked: false,
     text: elementText.text,
     fontSize: 20,
@@ -385,6 +443,12 @@ const addTextData = (elementText: any, elementList: any) => {
     baseline: 18,
     originalText: elementText.text,
     containerId: elementText.containerId || "",
+    boundElements: [],
+    updated: Date.now(),
+    seed: generateSeed(),
+    version: 2,
+    versionNonce: 1220284739,
+    link: null,
     ...elementText,
   });
 };

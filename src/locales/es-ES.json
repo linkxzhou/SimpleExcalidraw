@@ -232,6 +232,8 @@
     "aiModel": "IA eredua",
     "aiPrompt": "IA gonbita",
     "aiSubmit": "Sortu IA-rekin",
+    "aiSimpleFlow": "Flujo simple",
+    "aiComplexFlow": "Flujo complejo",
     "aiPromptPlaceholder": "Implementar la funcionalidad: xxx\nMódulo: xxx\nSubmódulo: xxx\nDescripción detallada: xxx"
   },
   "headings": {
@@ -412,7 +414,7 @@
     "fileSavedToFilename": "Guardado en {filename}",
     "canvas": "lienzo",
     "selection": "selección",
-    "pasteAsSingleElement": "Usa {{shortcut}} para pegar como un solo elemento,\no pegar en un editor de texto existente"
+    "pasteAsSingleElement": "Usa {{shortcut}} para pegar como un solo elemento, pegar en un editor de texto existente"
   },
   "colors": {
     "272727": "{defaultValue}",

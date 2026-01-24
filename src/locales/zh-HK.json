@@ -231,6 +231,8 @@
     "aiModel": "{defaultValue}",
     "aiPrompt": "{defaultValue}",
     "aiSubmit": "{defaultValue}",
+    "aiSimpleFlow": "簡單流程",
+    "aiComplexFlow": "複雜生成",
     "aiPromptPlaceholder": "{defaultValue}"
   },
   "headings": {

@@ -130,6 +130,7 @@ export const loadSceneOrLibraryFromBlob = async (
   localElements: readonly ExcalidrawElement[] | null,
   /** FileSystemHandle. Defaults to `blob.handle` if defined, otherwise null. */
   fileHandle?: FileSystemHandle | null,
+  refreshDimensions = false,
 ) => {
   const contents = await parseFileContents(blob);
   try {
@@ -156,6 +157,7 @@ export const loadSceneOrLibraryFromBlob = async (
           },
           localAppState,
           localElements,
+          refreshDimensions,
         ),
       };
     } else if (isValidLibrary(data)) {
@@ -178,12 +180,14 @@ export const loadFromBlob = async (
   localElements: readonly ExcalidrawElement[] | null,
   /** FileSystemHandle. Defaults to `blob.handle` if defined, otherwise null. */
   fileHandle?: FileSystemHandle | null,
+  refreshDimensions = false,
 ) => {
   const ret = await loadSceneOrLibraryFromBlob(
     blob,
     localAppState,
     localElements,
     fileHandle,
+    refreshDimensions,
   );
   if (ret.type !== MIME_TYPES.excalidraw) {
     throw new Error(t("alerts.couldNotLoadInvalidFile"));

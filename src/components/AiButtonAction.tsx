@@ -124,6 +124,7 @@ function extractIdeas(data: any): any {
     if (typeof data === "string") {
       return safeParseJson(data);
     }
+
     if (data && typeof data === "object") {
       const content =
         data?.choices?.[0]?.message?.content ??
@@ -170,7 +171,7 @@ export async function requestCompletions({
     model,
     messages: [{ role: "user", content: prompt }],
     temperature,
-    max_tokens: 32000,
+    max_tokens: 63000,
     enable_thinking: false,
   };
 
@@ -249,10 +250,7 @@ Produce a concise but complete spec with these sections (use the same headings):
 ${raw}`;
 }
 
-export function buildExcalidrawPrompt(
-  prompt: string,
-  settings: AISettings = {},
-) {
+export function buildMindPrompt(prompt: string, settings: AISettings = {}) {
   const language = settings.language || getLanguage()?.label;
   return `## Role
 You are an expert in Mermaid diagramming. Convert the input Task into ONE Mermaid diagram that best matches the content.
@@ -264,13 +262,11 @@ You are an expert in Mermaid diagramming. Convert the input Task into ONE Mermai
 - Start with exactly ONE of:
   - flowchart LR
   - sequenceDiagram
-  - classDiagram
 - Do NOT mix multiple diagram types in one output.
 
 ## Diagram Selection Rules
 - Use flowchart LR for architecture/modules/components and their connections.
 - Use sequenceDiagram for time-ordered interactions/messages between actors/services.
-- Use classDiagram for domain/data model (entities/classes) and relationships.
 
 ## Mermaid Conventions (by type)
 - Common:
@@ -297,24 +293,92 @@ You are an expert in Mermaid diagramming. Convert the input Task into ONE Mermai
 - sequenceDiagram:
   - Use \`actor\`/\`participant\` with clear names (human-readable labels in ${language}).
   - Use concise messages with arrows (e.g. A->>B: label).
+  - **Important**: Add sequence numbers to each message using \`autonumber\` at the beginning of the diagram.
+    - Example:
+      sequenceDiagram
+        autonumber
+        actor User
+        participant Server
+        User->>Server: 1. Login request
+        Server-->>User: 2. Return token
   - Do NOT add background colors/styles unless you are 100% sure the syntax is valid for sequenceDiagram.
-
-- classDiagram:
-  - Use class names as Mermaid-safe IDs; keep members minimal (only if needed).
-  - Use simple relationship arrows with short labels.
-  - If you add colors, use Mermaid styling (\`classDef\` + \`class\`) and keep it minimal.
-  - IMPORTANT: When using \`class\` to assign a style, you MUST put exactly ONE class per line.
-    - Correct:
-      - class NginxCore core
-      - class EventModule module
-      - class Connection data
-    - Incorrect (do not do this):
-      - class EventModule,HTTPModule,UpstreamModule,ConfigModule module
-      - class Connection,Event,Request,Response,MemoryPool data
 
 ## Layout / Readability Rules
 - Keep it 3-10 main modules total when using flowchart LR.
 - Keep labels short (1-6 words) and avoid markdown formatting.
+
+## Task
+<context>
+${prompt}
+</context>
+`;
+}
+
+export function buildExcalidrawPrompt(
+  prompt: string,
+  settings: AISettings = {},
+) {
+  const language = settings.language || getLanguage()?.label || "English";
+  return `## Role
+You are an expert diagram creation assistant specializing in Excalidraw JSON generation.
+Your primary function is to interpret the user's request and generate a clear, well-organized visual diagram as a JSON array of Excalidraw elements.
+
+## Language
+- Use ${language} for all visible labels and text in the diagram.
+
+## App Context
+You are an AI agent inside a web app. The interface allows users to view and edit diagrams.
+You can read the text content and generate diagrams by producing valid Excalidraw JSON.
+
+## Layout Constraints
+- CRITICAL: Keep all diagram elements within a single page viewport.
+- Position all elements with x coordinates between 0-1000 and y coordinates between 0-800.
+- Maximum width for containers (like rectangles): 300 pixels.
+- Use compact, efficient layouts that fit the entire diagram in one view.
+- Avoid object overlapping or edge crossing.
+- Start positioning from reasonable margins (e.g., x=40, y=40) and keep elements grouped closely.
+- For large diagrams, use vertical stacking or grid layouts that stay within bounds.
+
+## Output Format (STRICT)
+- Return ONLY a valid JSON array of Excalidraw elements.
+- Do NOT wrap the JSON in markdown code fences (e.g., \`\`\`json ... \`\`\`).
+- Do NOT include any conversational text, explanations, or "Here is the diagram" prefixes.
+- The output must be parsable by \`JSON.parse()\`.
+
+## Excalidraw Element Schema (Simplified)
+Each element in the array should follow this structure (approximate):
+{
+  "type": "rectangle" | "ellipse" | "diamond" | "arrow" | "text",
+  "id": "unique_id_string",
+  "x": number,
+  "y": number,
+  "width": number,
+  "height": number,
+  "angle": 0,
+  "strokeColor": "#000000",
+  "backgroundColor": "transparent",
+  "fillStyle": "hachure",
+  "strokeWidth": 1,
+  "strokeStyle": "solid",
+  "roughness": 1,
+  "opacity": 100,
+  "groupIds": [],
+  "roundness": null,
+  "seed": number,
+  "version": 1,
+  "versionNonce": 0,
+  "isDeleted": false,
+  "boundElements": null,
+  "updated": number,
+  "link": null,
+  "locked": false,
+  "text": "Label Text" // ONLY for "text" type
+}
+
+*Important*:
+- For "text" elements, use the "text" field for content.
+- For shapes (rectangle, etc.), do NOT use "text" field; use a separate "text" element if a label is needed, or use "label" property if you are sure about the schema (but separate text element is safer for positioning).
+- Use "arrow" type for connections.
 
 ## Task
 <context>

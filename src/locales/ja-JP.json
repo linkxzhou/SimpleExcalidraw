@@ -232,6 +232,8 @@
     "aiModel": "AI モデル",
     "aiPrompt": "生成プロンプト",
     "aiSubmit": "AI生成",
+    "aiSimpleFlow": "簡単フロー",
+    "aiComplexFlow": "複雑フロー",
     "aiPromptPlaceholder": "実装する機能：xxx\nモジュール：xxx\nサブモジュール：xxx\n詳細な説明：xxx"
   },
   "headings": {

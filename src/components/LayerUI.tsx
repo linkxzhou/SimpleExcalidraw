@@ -350,8 +350,8 @@ const LayerUI = ({
 
                           <div className="App-toolbar__divider"></div>
 
-                          <AIButton title={t("toolBar.aiAssistant")} />
                           <AnimateButton />
+                          <AIButton title={t("toolBar.aiAssistant")} />
                         </Stack.Row>
                       </Island>
                     </Stack.Row>

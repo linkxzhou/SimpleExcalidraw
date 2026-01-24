@@ -231,6 +231,8 @@
     "aiModel": "AI 模型",
     "aiPrompt": "生成提示词",
     "aiSubmit": "AI生成",
+    "aiSimpleFlow": "简单流程",
+    "aiComplexFlow": "复杂生成",
     "aiPromptPlaceholder": "实现功能：xxx\n模块：xxx\n子模块：xxx\n详细描述：xxx"
   },
   "headings": {

@@ -18,7 +18,6 @@ export const SequenceToExcalidrawSkeletonConvertor = new GraphConverter({
   converter: (chart: Sequence) => {
     const elements: any[] = [];
     const activations: any[] = [];
-    console.log("sequence nodes", chart.nodes);
 
     Object.values(chart.nodes).forEach((node) => {
       if (!node || !node.length) {

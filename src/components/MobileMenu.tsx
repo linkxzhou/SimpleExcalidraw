@@ -113,8 +113,8 @@ export const MobileMenu = ({
                     title={t("toolBar.hand")}
                     isMobile
                   />
-                  <AIButton title={t("toolBar.aiAssistant")} />
                   <AnimateButton />
+                  <AIButton title={t("toolBar.aiAssistant")} />
                 </div>
               </Stack.Row>
             </Stack.Col>

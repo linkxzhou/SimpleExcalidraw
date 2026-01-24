@@ -231,6 +231,8 @@
     "aiModel": "AI 模型",
     "aiPrompt": "生成提示詞",
     "aiSubmit": "AI生成",
+    "aiSimpleFlow": "簡單流程",
+    "aiComplexFlow": "複雜生成",
     "aiPromptPlaceholder": "實現功能：xxx\n模組：xxx\n子模組：xxx\n詳細描述：xxx"
   },
   "headings": {
@@ -280,7 +282,7 @@
     "sceneContent": "作品內容："
   },
   "roomDialog": {
-    "desc_intro": "你可以邀請其他人一起協作目前的作品。",
+    "desc_intro": "您可以邀請其他人一起協作目前的作品。",
     "desc_privacy": "連線使用 end-to-end 加密故無須擔心作品的安全性。即使是我們的伺服器也無法取得其內容。",
     "button_startSession": "開始連線",
     "button_stopSession": "停止連線",

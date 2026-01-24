@@ -16,6 +16,34 @@ jest.mock("nanoid", () => {
     nanoid: jest.fn(() => "test-id"),
   };
 });
+
+jest.mock("react-pdftotext", () => {
+  return {
+    __esModule: true,
+    default: jest.fn(async () => ""),
+  };
+});
+
+jest.mock("mermaid", () => {
+  return {
+    __esModule: true,
+    default: {
+      initialize: jest.fn(),
+      mermaidAPI: {
+        getDiagramFromText: jest.fn(async () => ({
+          type: "flowchart-v2",
+          db: {
+            getVertices: jest.fn(() => ({})),
+            getClasses: jest.fn(() => ({})),
+            getEdges: jest.fn(() => []),
+            getSubGraphs: jest.fn(() => []),
+          },
+        })),
+      },
+      render: jest.fn(async () => ({ svg: "" })),
+    },
+  };
+});
 // ReactDOM is located inside index.tsx file
 // as a result, we need a place for it to render into
 const element = document.createElement("div");
