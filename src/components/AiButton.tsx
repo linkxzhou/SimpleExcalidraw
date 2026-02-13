@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import { ToolButton, ToolButtonSize } from "./ToolButton";
 import { AIIcon } from "./icons";
-import { Button, Modal, Input, Upload, message } from "antd";
+import { Button, Modal, Input, Upload, message, AutoComplete } from "antd";
 import {
   requestCompletions,
   requestTextCompletions,
@@ -38,13 +38,23 @@ type AIButtonProps = {
 const DEFAULT_SIZE: ToolButtonSize = "medium";
 type SizeType = ConfigProviderProps["componentSize"];
 
+const MODEL_OPTIONS = [
+  { value: "Pro/moonshotai/Kimi-K2.5", label: "Pro/moonshotai/Kimi-K2.5" },
+  { value: "Pro/zai-org/GLM-5", label: "Pro/zai-org/GLM-5" },
+  { value: "Pro/zai-org/GLM-4.7", label: "Pro/zai-org/GLM-4.7" },
+  { value: "deepseek-ai/DeepSeek-V3.2", label: "deepseek-ai/DeepSeek-V3.2" },
+];
+
 export const AIButton: React.FC<AIButtonProps> = (props) => {
   const [open, setOpen] = useState(false);
   const defaults = loadAISettings();
   const [textAreaValue, setTextAreaValue] = useState(defaults.prompt || "");
   const [api, setApi] = useState(defaults.api || "");
   const [secret, setSecret] = useState(defaults.secret || "");
-  const [model, setModel] = useState(defaults.model || "");
+  const [model, setModel] = useState(
+    defaults.model || "Pro/moonshotai/Kimi-K2.5",
+  );
+  const [modelSearch, setModelSearch] = useState("");
   const [loadingExcalidraw, setLoadingExcalidraw] = useState(false);
   const [loadingMind, setLoadingMind] = useState(false);
   const [extending, setExtending] = useState(false);
@@ -123,12 +133,25 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
           <span style={{ whiteSpace: "nowrap" }}>
             {t("toolBar.aiModel")} :{" "}
           </span>
-          <Input
-            name="model"
+          <AutoComplete
+            options={
+              modelSearch
+                ? MODEL_OPTIONS.filter((opt) =>
+                    opt.value.toLowerCase().includes(modelSearch.toLowerCase()),
+                  )
+                : MODEL_OPTIONS
+            }
             value={model}
-            onChange={(e) => setModel(e.target.value)}
-            placeholder="gpt-5"
-            style={{ flex: 1, minWidth: 0, borderColor: "#e3e2fe" }}
+            onChange={(value) => {
+              setModel(value);
+              setModelSearch(value);
+            }}
+            onSelect={(value) => {
+              setModel(value);
+              setModelSearch("");
+            }}
+            placeholder="选择或输入模型名称"
+            style={{ flex: 1, minWidth: 0 }}
           />
         </label>
       </div>
