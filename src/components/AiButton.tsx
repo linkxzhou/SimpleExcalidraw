@@ -74,6 +74,10 @@ export const AIButton: React.FC<AIButtonProps> = (props) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    saveAISettings({ api, secret, model });
+  }, [api, secret, model]);
+
   const { TextArea } = Input;
   const sharedContent = (
     <>
